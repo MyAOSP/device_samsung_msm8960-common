@@ -22,23 +22,29 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.provider.Settings;
 import android.util.Log;
 
-public class SensorsFragmentActivity extends PreferenceFragment {
+public class SensorsFragmentActivity extends PreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String TAG = "GalaxyS3Parts_General";
 
     private static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
     private static final String FILE_TOUCHKEY_TOGGLE = "/sys/class/leds/button-backlight/max_brightness";
     private static final String FILE_BLN_TOGGLE = "/sys/class/misc/backlightnotification/enabled";
+    private static final int KEY_LIGHT_DEFAULT_DURATION = 5;
 
     private static final boolean sHasTouchkeyToggle = Utils.fileExists(FILE_TOUCHKEY_TOGGLE);
     private static final boolean sHasTouchkeyBLN = Utils.fileExists(FILE_BLN_TOGGLE);
+
+    private ListPreference mLightDuration;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,15 @@ public class SensorsFragmentActivity extends PreferenceFragment {
         PreferenceCategory prefs = (PreferenceCategory) findPreference(DeviceSettings.CATEGORY_TOUCHKEY);
         if (!sHasTouchkeyToggle) {
             prefs.removePreference(findPreference(DeviceSettings.KEY_TOUCHKEY_LIGHT));
+            prefs.removePreference(findPreference(DeviceSettings.HARDWARE_KEYS_LIGHT_DURATION));
+        } else {
+            mLightDuration = (ListPreference) findPreference(DeviceSettings.HARDWARE_KEYS_LIGHT_DURATION);
+
+            int keyLightDuration = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.KEY_HARDWARE_LIGHT_DURATION, KEY_LIGHT_DEFAULT_DURATION);
+            mLightDuration.setValue(Integer.toString(keyLightDuration));
+            mLightDuration.setSummary(mLightDuration.getEntry());
+            mLightDuration.setOnPreferenceChangeListener(this);
         }
         if (!sHasTouchkeyBLN) {
             prefs.removePreference(findPreference(DeviceSettings.KEY_TOUCHKEY_BLN));
@@ -83,6 +98,20 @@ public class SensorsFragmentActivity extends PreferenceFragment {
 
         return true;
     }
+
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mLightDuration) {
+            int value = Integer.valueOf((String) newValue);
+            int index = mLightDuration.findIndexOfValue((String) newValue);
+            mLightDuration.setSummary(
+                    mLightDuration.getEntries()[index]);
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.KEY_HARDWARE_LIGHT_DURATION, value);
+            return true;
+        }
+        
+        return false;
+    } 
 
     public static void restore(Context context) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);

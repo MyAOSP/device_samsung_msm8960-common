@@ -62,4 +62,29 @@
         <item>100</item>
     </string-array>
 
+     <string-array name="hardware_keys_action_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <!-- hardware key light duration -->
+    <string-array name="hardware_keys_light_duration_entries" translatable="false">
+        <item>@string/hardware_keys_light_duration_one</item>
+        <item>@string/hardware_keys_light_duration_two</item>
+        <item>@string/hardware_keys_light_duration_three</item>
+        <item>@string/hardware_keys_light_duration_four</item>
+        <item>@string/hardware_keys_light_duration_five</item>
+    </string-array>
+
+    <string-array name="hardware_keys_light_duration_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

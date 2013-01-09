@@ -31,6 +31,13 @@
                 android:defaultValue="true"
                 />
 
+    <ListPreference
+            android:key="hardware_keys_light_duration"
+            android:dialogTitle="@string/hardware_keys_light_duration_title"
+            android:title="@string/hardware_keys_light_duration_title"
+            android:entries="@array/hardware_keys_light_duration_entries"
+            android:entryValues="@array/hardware_keys_light_duration_values" />
+
     <CheckBoxPreference
                 android:key="touchkey_bln"
                 android:title="@string/touchkey_bln_title_head"
