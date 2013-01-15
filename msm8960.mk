@@ -141,6 +141,10 @@ PRODUCT_COPY_FILES += \
 # We have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
+# Cne Module
+PRODUCT_PROPERTY_OVERRIDES += \
+     persist.cne.feature=1
+
 # Common overlay
 DEVICE_PACKAGE_OVERLAYS += device/samsung/msm8960-common/overlay
 
