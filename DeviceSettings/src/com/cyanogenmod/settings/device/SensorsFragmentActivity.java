@@ -45,6 +45,7 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
     private static final boolean sHasTouchkeyBLN = Utils.fileExists(FILE_BLN_TOGGLE);
 
     private ListPreference mLightDuration;
+    private CheckBoxPreference mEnableHardwareKeys;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,14 +57,22 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
         if (!sHasTouchkeyToggle) {
             prefs.removePreference(findPreference(DeviceSettings.KEY_TOUCHKEY_LIGHT));
             prefs.removePreference(findPreference(DeviceSettings.HARDWARE_KEYS_LIGHT_DURATION));
+            prefs.removePreference(findPreference(DeviceSettings.HARDWARE_KEYS_ENABLE));
         } else {
             mLightDuration = (ListPreference) findPreference(DeviceSettings.HARDWARE_KEYS_LIGHT_DURATION);
+            mEnableHardwareKeys = (CheckBoxPreference) findPreference(DeviceSettings.HARDWARE_KEYS_ENABLE);
 
             int keyLightDuration = Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.KEY_HARDWARE_LIGHT_DURATION, KEY_LIGHT_DEFAULT_DURATION);
             mLightDuration.setValue(Integer.toString(keyLightDuration));
             mLightDuration.setSummary(mLightDuration.getEntry());
             mLightDuration.setOnPreferenceChangeListener(this);
+
+            int disableHardwareKeys = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.HARDWARE_KEY_DISABLE, 0);
+
+            mEnableHardwareKeys.setChecked(disableHardwareKeys == 0);
+
         }
         if (!sHasTouchkeyBLN) {
             prefs.removePreference(findPreference(DeviceSettings.KEY_TOUCHKEY_BLN));
@@ -94,6 +103,12 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
             Utils.writeValue(FILE_TOUCHKEY_TOGGLE, ((CheckBoxPreference)preference).isChecked() ? "255" : "0");
         } else if (key.compareTo(DeviceSettings.KEY_TOUCHKEY_BLN) == 0) {
             Utils.writeValue(FILE_BLN_TOGGLE, ((CheckBoxPreference)preference).isChecked() ? "1" : "0");
+        } else if (key.compareTo(DeviceSettings.HARDWARE_KEYS_ENABLE) == 0) {
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.HARDWARE_KEY_DISABLE, 
+                    (((CheckBoxPreference)preference).isChecked() ? 0: 1));
+
+            Utils.writeValue(FILE_TOUCHKEY_TOGGLE, ((CheckBoxPreference)preference).isChecked() ? "255" : "0");
         }
 
         return true;
