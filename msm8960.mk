@@ -37,10 +37,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
 
-# Media config
-PRODUCT_COPY_FILES += \
-    device/samsung/msm8960-common/configs/media_profiles.xml:system/etc/media_profiles.xml
-
 # Audio
 PRODUCT_PACKAGES += \
     alsa.msm8960 \
@@ -63,30 +59,6 @@ PRODUCT_PACKAGES += \
      GalaxyS3Settings \
      SamsungServiceMode
 
-# GPS
-PRODUCT_PACKAGES += \
-	gps.msm8960
-
-PRODUCT_COPY_FILES += \
-    device/samsung/msm8960-common/gps/gps.conf:system/etc/gps.conf
-
-# NFC Support
-PRODUCT_PACKAGES += \
-    libnfc \
-    libnfc_jni \
-    Nfc \
-    Tag \
-    com.android.nfc_extras
-
-# NFCEE access control
-ifeq ($(TARGET_BUILD_VARIANT),user)
-    NFCEE_ACCESS_PATH := device/samsung/msm8960-common/configs/nfcee_access.xml
-else
-    NFCEE_ACCESS_PATH := device/samsung/msm8960-common/configs/nfcee_access_debug.xml
-endif
-PRODUCT_COPY_FILES += \
-    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
-
 # Misc
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
@@ -104,13 +76,7 @@ PRODUCT_COPY_FILES += \
     device/samsung/msm8960-common/keylayout/Generic.kl:system/usr/keylayout/Generic.kl \
     device/samsung/msm8960-common/keylayout/qwerty.kl:system/usr/keylayout/qwerty.kl\
 	device/samsung/msm8960-common/keylayout/cyttsp-i2c.kl:system/usr/keylayout/cyttsp-i2c.kl \
-	device/samsung/msm8960-common/keylayout/fsa9485.kl:system/usr/keylayout/fsa9485.kl \
 	device/samsung/msm8960-common/keylayout/keypad_8960.kl:system/usr/keylayout/keypad_8960.kl \
-	device/samsung/msm8960-common/keylayout/msm8960-snd-card_Button_Jack.kl:system/usr/keylayout/msm8960-snd-card_Button_Jack.kl \
-	device/samsung/msm8960-common/keylayout/sec_key.kl:system/usr/keylayout/sec_key.kl \
-	device/samsung/msm8960-common/keylayout/sec_keys.kl:system/usr/keylayout/sec_keys.kl \
-	device/samsung/msm8960-common/keylayout/sec_powerkey.kl:system/usr/keylayout/sec_powerkey.kl \
-	device/samsung/msm8960-common/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl \
     device/samsung/msm8960-common/keylayout/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_028e.kl \
     device/samsung/msm8960-common/keylayout/Vendor_046d_Product_c216.kl:system/usr/keylayout/Vendor_046d_Product_c216.kl \
     device/samsung/msm8960-common/keylayout/Vendor_046d_Product_c294.kl:system/usr/keylayout/Vendor_046d_Product_c294.kl \

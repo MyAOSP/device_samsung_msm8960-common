@@ -40,9 +40,11 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
     private static final String FILE_TOUCHKEY_TOGGLE = "/sys/class/leds/button-backlight/max_brightness";
     private static final String FILE_BLN_TOGGLE = "/sys/class/misc/backlightnotification/enabled";
     private static final int KEY_LIGHT_DEFAULT_DURATION = 5;
+    private static final String FILE_KEYBOARD_TOGGLE = "/sys/class/leds/keyboard-backlight/max_brightness";
 
     private static final boolean sHasTouchkeyToggle = Utils.fileExists(FILE_TOUCHKEY_TOGGLE);
     private static final boolean sHasTouchkeyBLN = Utils.fileExists(FILE_BLN_TOGGLE);
+    private static final boolean sHasKeyboardToggle = Utils.fileExists(FILE_KEYBOARD_TOGGLE);
 
     private ListPreference mLightDuration;
     private CheckBoxPreference mEnableHardwareKeys;
@@ -77,6 +79,9 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
         if (!sHasTouchkeyBLN) {
             prefs.removePreference(findPreference(DeviceSettings.KEY_TOUCHKEY_BLN));
         }
+        if (!sHasKeyboardToggle) {
+            prefs.removePreference(findPreference(DeviceSettings.KEY_KEYBOARD_LIGHT));
+        }
         if (prefs.getPreferenceCount() == 0) {
             getPreferenceScreen().removePreference(prefs);
         }
@@ -109,6 +114,8 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
                     (((CheckBoxPreference)preference).isChecked() ? 0: 1));
 
             Utils.writeValue(FILE_TOUCHKEY_TOGGLE, ((CheckBoxPreference)preference).isChecked() ? "255" : "0");
+        } else if (key.compareTo(DeviceSettings.KEY_KEYBOARD_LIGHT) == 0) {
+            Utils.writeValue(FILE_KEYBOARD_TOGGLE, ((CheckBoxPreference)preference).isChecked() ? "255" : "0");
         }
 
         return true;
@@ -144,5 +151,10 @@ public class SensorsFragmentActivity extends PreferenceFragment implements OnPre
         if (sHasTouchkeyBLN) {
             Utils.writeValue(FILE_BLN_TOGGLE, sharedPrefs.getBoolean(DeviceSettings.KEY_TOUCHKEY_BLN, true) ? "1" : "0");
         }
+
+        if (sHasKeyboardToggle) {
+            Utils.writeValue(FILE_KEYBOARD_TOGGLE, sharedPrefs.getBoolean(DeviceSettings.KEY_KEYBOARD_LIGHT, true) ? "255" : "0");
+        }
+
     }
 }

@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/msm8960-common/include
-
 BOARD_VENDOR := samsung
 
 # Platform
@@ -89,7 +87,8 @@ BOARD_USES_SEPERATED_AUDIO_INPUT := true
 TARGET_USES_QCOM_COMPRESSED_AUDIO := true
 
 # Kernel time optimization
-KERNEL_HAS_GETTIMEOFDAY_HELPER := true
+# temp remove - causing issues with short/long presses
+# KERNEL_HAS_GETTIMEOFDAY_HELPER := true
 
 # We have the new GPS driver
 BOARD_HAVE_NEW_QC_GPS := true
