@@ -86,6 +86,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+    </string-array>
     
     <string-array name="vibrator_intensity_entries">
         <item>0%</item>
