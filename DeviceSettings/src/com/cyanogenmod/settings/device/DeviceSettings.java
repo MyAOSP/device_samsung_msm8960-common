@@ -49,8 +49,6 @@ public class DeviceSettings extends FragmentActivity {
     public static final String HARDWARE_KEYS_LIGHT_DURATION = "hardware_keys_light_duration";
     public static final String KEY_KEYBOARD_LIGHT = "keyboard_light";
     public static final String KEY_VIBRATOR_INTENSITY = "vibrator_intensity";
-    public static final String KEY_KEYBOARD_LIGHT = "keyboard_light";
-    public static final String KEY_VIBRATOR_INTENSITY = "vibrator_intensity";
     public static final String KEY_PANEL_COLOR_TEMPERATURE = "panel_color_temperature";
     public static final String KEY_CABC = "cabc";
 

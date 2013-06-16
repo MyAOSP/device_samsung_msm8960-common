@@ -64,8 +64,7 @@
         <item>100</item>
     </string-array>
 
-<<<<<<< HEAD
-     <string-array name="hardware_keys_action_values" translatable="false">
+    <string-array name="hardware_keys_action_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
@@ -90,7 +89,7 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    
+
     <string-array name="vibrator_intensity_entries">
         <item>0%</item>
         <item>25%</item>
